@@ -12,6 +12,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-interaction --no-progress
+
       - name: Copy .env
         run: cp .env.example .env
 
