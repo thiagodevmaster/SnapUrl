@@ -14,12 +14,21 @@ class AuthController extends Controller
     {
         $data = $request->validated();
         if(!Auth::attempt($data)){
-            return response()->json(['message' => 'Invalid Credentials']);
+            return response()->json(['message' => 'Invalid Credentials'], 403);
         }
         
         return response()->json([
             'message' => 'Login Successfull',
             'token' => $request->user()->createToken('user')->plainTextToken
+        ]);
+    }
+
+    public function logout(Request $request): JsonResponse
+    {
+        $request->user()->currentAccessToken()->delete();
+
+        return response()->json([
+            'message' => 'Logged out successfull'
         ]);
     }
 }
