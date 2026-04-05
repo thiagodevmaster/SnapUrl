@@ -13,7 +13,7 @@ class ShortenRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -48,6 +48,6 @@ class ShortenRequest extends FormRequest
         return response()->json([
             'message' => 'Validation failed',
             'errors' => $validator->errors()
-        ], 422)->send();
+        ], 422);
     }
 }
