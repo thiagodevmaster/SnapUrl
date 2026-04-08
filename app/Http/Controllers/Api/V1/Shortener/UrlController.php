@@ -3,14 +3,19 @@
 namespace App\Http\Controllers\Api\V1\Shortener;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Shortener\ShortenRequest;
+use App\Jobs\ShortenJob;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class UrlController extends Controller
 {
-    public function store():  JsonResponse
+
+    public function store(ShortenRequest $request):  JsonResponse
     {
-        //TODO: Implement the logic to shorten the URL and return the response
+        $data = $request->validated();
+        
+        ShortenJob::dispatch($data, $request->user());
+        
         return response()->json(['message' => 'URL shortened successfully']);
     }
 }
